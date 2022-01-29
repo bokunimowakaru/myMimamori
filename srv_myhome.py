@@ -63,12 +63,13 @@ MAIL_ID   = '************@gmail.com'    ## 要変更 ##    # GMailのアカウ�
 MAIL_PASS = '************'              ## 要変更 ##    # パスワード
 MAILTO    = 'watt@bokunimo.net'         ## 要変更 ##    # メールの宛先
 
-ip_chime  = '192.168.0.5'               ## 要変更 ##    # IoTチャイム,IPアドレス
+ip_chime  = '192.168.0.XXX'             ## 要変更 ##    # IoTチャイム,IPアドレス
+ip_irrc   = '192.168.0.XXX'             ## 要変更 ##    # リモコン送信機アドレス
 
 LINE_TOKEN= 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
                                             # ↑ここにLINEで取得したTOKENを入力
 '''
-　※LINEに送信したい場合は、お手持ちのLINE アカウントの LINE Notify 用のトークンが
+　※LINEに送信したい場合は、お手持ちのLINEアカウントの LINE Notify用のトークンが
 　　必要です。以下の手順で取得してください。
     1. https://notify-bot.line.me/ へアクセス
     2. 右上のアカウントメニューから「マイページ」を選択
@@ -79,8 +80,6 @@ LINE_TOKEN= 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
     7. [コピー]ボタンでクリップボードへコピー
     8. 下記のLINE_TOKENに貼り付け
 '''
-
-
 
 ROOM      = ['1','2','3']                               # 部屋番号(デバイスSFX)
 ROOM_STAY = None                                        # 在室状態
@@ -127,6 +126,8 @@ def mimamori(interval):
                                                         # (スレッド動作確認用)
 
 def chime(level):                                       # チャイム
+    if ip_chime  == '192.168.0.XXX':                    # IPアドレス未設定時に
+        return                                          # 何もせずに戻る
     if level is None or level < 0 or level > 3:         # 範囲外の値の時に
         return                                          # 何もせずに戻る
     url_s = 'http://' + ip_chime                        # アクセス先
@@ -181,10 +182,18 @@ def aircon(onoff):                                      # エアコン制御
     else:                                               # Falseのとき
         code = AC_OFF.split(',')                        # エアコンをOFFに
     print('RC, Conditioner,',code)                      # 送信するリモコン信号を表示
-    try:
-        raspiIr.output(code)                            # リモコンコードを送信
-    except ValueError as e:                             # 例外処理発生時(アクセス拒否)
-        print('ERROR:raspiIr,',e)                       # エラー内容表示
+    if ip_irrc == '192.168.0.XXX':                      # IPアドレスが未設定のとき
+        try:
+            raspiIr.output(code)                        # リモコンコードを送信
+        except ValueError as e:                         # 例外処理発生時(アクセス拒否)
+            print('ERROR:raspiIr,',e)                   # エラー内容表示
+    else:                                               # IPアドレスが設定されている時
+        url_s = 'http://' + ip_irrc                     # アクセス先
+        s = '/?IR=' + str(len(code)) + ',' + ','.join(code) # 送信信号を文字列変数sへ
+        try:
+            urllib.request.urlopen(url_s + s)           # Wi-Fiリモコン送信機に送信
+        except urllib.error.URLError:                   # 例外処理発生時
+            print('URLError :',url_s)                   # エラー表示
 
 def check_dev_name(s):                                  # デバイス名を取得
     if not s.isprintable():                             # 表示可能な文字列で無い
