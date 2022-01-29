@@ -156,7 +156,7 @@ while sock:                                             # 永遠に繰り返す
     now = datetime.datetime.now()                       # 現在時刻を代入
     print(now.strftime('%Y/%m/%d %H:%M')+', ', end='')  # 日付を出力
     # 赤外線リモコン用の処理
-    if dev[0:5] == 'ir_in':
+    if dev[0:5] == 'ir_in' or dev[0:5] == 'ir_rc':
         print(vals[0],udp_from[0],',',vals[1:], end='')
         if udp.find(RC_CODE) >= 8:
             TIME_REMO = now                             # リモコン取得時刻を更新
