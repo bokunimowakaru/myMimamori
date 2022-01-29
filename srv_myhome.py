@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # Example 39 Raspberry Pi によるホームネットワーク i.myMimamoriHome
-#                                         Copyright (c) 2016-2019 Wataru KUNINO
+#                                         Copyright (c) 2016-2022 Wataru KUNINO
 #
 # IoT人感センサとIoT温度センサを用い、在室中に28℃以上または15℃以下となった時に
 # エアコンの運転を開始する。
@@ -65,6 +65,23 @@ MAILTO    = 'watt@bokunimo.net'         ## 要変更 ##    # メールの宛先
 
 ip_chime  = '192.168.0.5'               ## 要変更 ##    # IoTチャイム,IPアドレス
 
+LINE_TOKEN= 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+                                            # ↑ここにLINEで取得したTOKENを入力
+'''
+　※LINEに送信したい場合は、お手持ちのLINE アカウントの LINE Notify 用のトークンが
+　　必要です。以下の手順で取得してください。
+    1. https://notify-bot.line.me/ へアクセス
+    2. 右上のアカウントメニューから「マイページ」を選択
+    3. アクセストークンの発行で「トークンを発行する」を選択
+    4. トークン名「raspi」（任意）を入力
+    5. 送信先のトークルームを選択する(「1:1でLINE Notifyから通知を受け取る」等)
+    6. [発行する]ボタンでトークンが発行される
+    7. [コピー]ボタンでクリップボードへコピー
+    8. 下記のLINE_TOKENに貼り付け
+'''
+
+
+
 ROOM      = ['1','2','3']                               # 部屋番号(デバイスSFX)
 ROOM_STAY = None                                        # 在室状態
 ROOM_RC   = False                                       # 運転フラグ
@@ -126,6 +143,23 @@ def chime(level):                                       # チャイム
             print('URLError :',url_s)                   # エラー表示
 
 def mail(att, subject, text):                           # メール送信用関数
+
+    # LINE送信部
+    if LINE_TOKEN != 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx':
+        url_s = 'https://notify-api.line.me/api/notify' # LINE アクセス先
+        head = {'Authorization':'Bearer ' + LINE_TOKEN,
+                'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'};
+        body = 'message=件名:' + subject + '\n本文:' text
+        print(body.replace('\n',', '))                  # メッセージを表示
+        post = urllib.request.Request(url_s, body.encode(), head)
+        try:                                            # 例外処理の監視を開始
+            urllib.request.urlopen(post)                # HTTPアクセスを実行
+        except Exception as e:                          # 例外処理発生時
+            print(e,url_s)                              # エラー内容と変数url_s表示
+
+    # メール送信部
+    if MAIL_PASS == '************':                     # メール未設定時
+        return                                          # 以下を実行しない
     try:
         mime = MIMEText(text.encode(), 'plain', 'utf-8')# TEXTをMIME形式に変換
         mime['From'] = MAIL_ID                          # 送信者を代入
