@@ -150,7 +150,7 @@ def mail(att, subject, text):                           # メール送信用関�
         url_s = 'https://notify-api.line.me/api/notify' # LINE アクセス先
         head = {'Authorization':'Bearer ' + LINE_TOKEN,
                 'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'};
-        body = 'message=件名:' + subject + '\n本文:' text
+        body = 'message=件名:' + subject + '\n本文:' + text
         print(body.replace('\n',', '))                  # メッセージを表示
         post = urllib.request.Request(url_s, body.encode(), head)
         try:                                            # 例外処理の監視を開始
