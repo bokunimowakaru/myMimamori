@@ -101,7 +101,7 @@ import threading                                        # スレッド用ライ�
 import smtplib                                          # メール送信用ライブラリ
 from email.mime.text import MIMEText                    # メール形式ライブラリ
 import sys
-sys.path.append('../libs/ir_remote')
+sys.path.append('libs/ir_remote')
 import raspi_ir
 
 def mimamori(interval):
