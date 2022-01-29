@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# Example 39 Raspberry Pi によるホームネットワーク i.myMimamoriHome
+# Raspberry Pi によるホームネットワーク i.myMimamoriHome
 #                                         Copyright (c) 2016-2022 Wataru KUNINO
 #
 # IoT人感センサとIoT温度センサを用い、在室中に28℃以上または15℃以下となった時に
 # エアコンの運転を開始する。
 # また、赤外線リモコンセンサを用い、テレビの操作を検出したときに在室と判断する。
+#
+# 最新版はこちら：
+# https://bokunimo.net/git/myMimamori/blob/master/srv_myhome.py
 
 #【接続図】
 #           [IoTボタン]----------------

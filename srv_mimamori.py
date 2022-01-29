@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 # coding: utf-8
 
-# Example 38 Raspberry Pi による見守りシステム i.myMimamoriPi
-#                                         Copyright (c) 2016-2019 Wataru KUNINO
+# Raspberry Pi による見守りシステム i.myMimamoriPi
+#                                         Copyright (c) 2016-2022 Wataru KUNINO
 #
 # テレビのリモコン信号と、IoT温度センサを監視し、指定した時間帯に4時間以上、
 # テレビ操作が無かったときや、温度が高いときにメールを送信します。
+#
+# 最新版はこちら：
+# https://bokunimo.net/git/myMimamori/blob/master/srv_mimamori.py
 
 #【接続図】
 #           [IoTボタン]----------------
