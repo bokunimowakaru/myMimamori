@@ -1,4 +1,4 @@
-# i.myMimamoriPy, i.myMimamoriPi
+# i.myMimamoriPi
 Home Monitoring System for My Mimamori Raspberry Pi
 
 ## 概要  
