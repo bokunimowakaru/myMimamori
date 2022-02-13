@@ -1,4 +1,4 @@
-# i.myMimamoriPy i.myMimamoriPi
+# i.myMimamoriPy, i.myMimamoriPi
 Home Monitoring System for My Mimamori Raspberry Pi
 
 ## 概要  
@@ -25,7 +25,7 @@ Myホーム・オートメーション・システムを紹介します。
 ## 引用文献・関連レポジトリ  
 本プログラム集は トランジスタ技術 2016年9月号の特集(第7章)で投稿した
 i.MyMimamoriPi システムをもとに改良し、使用言語をPythonに変更したものです。  
-以下の書籍、レポジトリを引用しました。
+詳細については、以下の文献、レポジトリを合わせてごらんください。
 
 ### 文献  
 - Pythonで作るIoTシステム プログラム・サンプル集 CQ出版社 2021年12月  
