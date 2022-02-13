@@ -1,19 +1,31 @@
 #!/bin/bash
 
 # オーバレイモードのドライブの存在を確認し、プロンプトを変更します。
+# 設定も可能です。
 #
-#                                              Copyright (c) 2021 Wataru KUNINO
+#                                         Copyright (c) 2021-2022 Wataru KUNINO
+
+# 最新版：
+# https://github.com/bokunimowakaru/myMimamori/blob/master/tools/olCheck.sh
 
 # インストール方法
-#   git clone https://bokunimo.net/git/udp.git
+#   cd
+#   git clone https://bokunimo.net/git/myMimamori.git
 
-# 使用方法:
-#   source ~/udp/udp_monitor/olCheck.sh
+# 使用方法(プロンプト変更):
+#   source ~/myMimamori/tools/olCheck.sh
 # または
 #   .bashrcに下記を追加する
-#     if [ -f ~/udp/udp_monitor/olCheck.sh ]; then
-#         . ~/udp/udp_monitor/olCheck.sh
+#     if [ -f ~/myMimamori/tools/olCheck.sh ]; then
+#         . ~/myMimamori/tools/olCheck.sh
 #     fi
+
+# 設定変更方法
+#   cd ~/myMimamori/tools
+#   ./olCheck.sh on
+# または
+#   ./olCheck.sh off
+# 実行後にOSの再起動が必要
 
 name="olCheck.sh"
 if [ "$0" != "-bash" ]; then
